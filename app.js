@@ -20,8 +20,10 @@ app.use(bodyParser.urlencoded({
 // Set the consts
 //
 const port = process.env.PORT || 3000;
-const HUBSPOT_URL = process.env.HUBSPOT_URL;
+const HUBSPOT_API_URL = process.env.HUBSPOT_API_URL;
 const HUBSPOT_API_KEY = process.env.HUBSPOT_API_KEY;
+const HUBSPOT_OWNER_ID = process.env.HUBSPOT_OWNER_ID;
+const HUBSPOT_PORTAL_ID = process.env.HUBSPOT_PORTAL_ID;
 
 //
 // Start the webservice 
@@ -31,7 +33,12 @@ const server = app.listen(port, function() {
 });
 
 //
-// GET /
+// Public folder
+//
+app.use(express.static('public'));
+
+//
+// GET /Hubspot for Hubspot integration
 //
 app.get('/Hubspot', function(req, res) {    
     if (req.query){
@@ -49,11 +56,19 @@ app.get('/Hubspot', function(req, res) {
             console.log ("AgentName: " + req.query.AgentName);
             console.log ("ANI: " + req.query.ANI);
             console.log ("QueueName: " + req.query.QueueName);
-            res.redirect(HUBSPOT_URL);
+
+            //
+            // Redirect to the hubspot call URL
+            //
+            res.redirect("https://app.hubspot.com/contacts/%s/contact/%s/?engagement=%s", HUBSPOT_PORTAL_ID, "80163986750", "68440462250");
         }
     }
     else{
         res.sendStatus(404);
     }
 });
+
+//
+// http://localhost:3000/Hubspot?TenantID=74a12140-d78e-4d77-86ca-09ec72f86e94&InteractionID=e44ab073-f9cb-4de4-9a62-089569e19cc2&DNIS=9000&QueueID=101603bc-82b9-45ed-ab2c-b46292a85a2c&AgentID=4c6fabf7-9943-4637-99ea-32b6b673470e&AgentName=diegofn+diegofn&ANI=3167046747&QueueName=Servicio+Cliente
+//
 
