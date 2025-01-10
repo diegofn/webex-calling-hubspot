@@ -73,7 +73,7 @@ app.get('/Hubspot', async function(req, res){
                 // Redirect to the hubspot call URL
                 //
                 if (contactId){
-                    let callId = await createCallEngagement(ANI, DNIS, contactId, req.secure? "https": "http", req.headers.host, InteractionID);
+                    let callId = await createCallEngagement(ANI, DNIS, contactId, req.headers.host, InteractionID);
                     console.log("Call ID: " + callId);
                     res.redirect(`https://app.hubspot.com/contacts/${HUBSPOT_PORTAL_ID}/contact/${contactId}/?engagement=${callId}`);
 
@@ -149,7 +149,7 @@ async function getContactIdByPhone(phone){
 //
 // Create a Call in Hubspot
 //
-async function createCallEngagement(ANI, DNIS, contactId, protocol, host, interactionID){
+async function createCallEngagement(ANI, DNIS, contactId, host, interactionID){
     try {
         const CallDisposition = Object.freeze({
             BUSY:           '9d9162e7-6cf3-4944-bf63-4dff82258764',
@@ -176,7 +176,7 @@ async function createCallEngagement(ANI, DNIS, contactId, protocol, host, intera
                 "hs_call_duration": "3000",
                 "hs_call_from_number": ANI,
                 "hs_call_to_number": DNIS,
-                "hs_call_recording_url": `${protocol}://${host}/recording-not-available-es.mp3?InteractionID=${interactionID}`,
+                "hs_call_recording_url": `https://${host}/recording-not-available-es.mp3?InteractionID=${interactionID}`,
                 "hs_call_status": "IN_PROGRESS"
               },
               "associations": [
