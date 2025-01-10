@@ -176,7 +176,7 @@ async function createCallEngagement(ANI, DNIS, contactId, protocol, host, intera
                 "hs_call_duration": "3000",
                 "hs_call_from_number": ANI,
                 "hs_call_to_number": DNIS,
-                "hs_call_recording_url": `${protocol}://${host}/recording-not-available-es.mp3?InteractionID=${interactionId}`,
+                "hs_call_recording_url": `${protocol}://${host}/recording-not-available-es.mp3?InteractionID=${interactionID}`,
                 "hs_call_status": "IN_PROGRESS"
               },
               "associations": [
