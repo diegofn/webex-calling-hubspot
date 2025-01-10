@@ -170,7 +170,7 @@ async function createCallEngagement(ANI, DNIS, contactId, host, interactionID){
                 "hs_timestamp": isoDate,
                 "hs_call_title": "Webex Calling Call",
                 "hubspot_owner_id": HUBSPOT_OWNER_ID,
-                "hs_call_body": `Enter your comments here ... <br/>Transcription link: ${protocol}://${host}/Webex/Transcription?InteractionID=${interactionID}`,
+                "hs_call_body": `Enter your comments here ... <br/>Transcription link: https://${host}/Webex/Transcription?InteractionID=${interactionID}`,
                 "hs_call_direction": "INBOUND",
                 "hs_call_disposition": CallDisposition.CONNECTED,
                 "hs_call_duration": "3000",
