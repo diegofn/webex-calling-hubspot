@@ -73,7 +73,7 @@ app.get('/Hubspot', async function(req, res){
                 // Redirect to the hubspot call URL
                 //
                 if (contactId){
-                    let callId = await createCallEngagement(ANI, DNIS, contactId);
+                    let callId = await createCallEngagement(ANI, DNIS, contactId, req.secure? "https": "http", req.headers.host, InteractionID);
                     console.log("Call ID: " + callId);
                     res.redirect(`https://app.hubspot.com/contacts/${HUBSPOT_PORTAL_ID}/contact/${contactId}/?engagement=${callId}`);
 
@@ -149,7 +149,7 @@ async function getContactIdByPhone(phone){
 //
 // Create a Call in Hubspot
 //
-async function createCallEngagement(ANI, DNIS, contactId){
+async function createCallEngagement(ANI, DNIS, contactId, protocol, host, interactionID){
     try {
         const CallDisposition = Object.freeze({
             BUSY:           '9d9162e7-6cf3-4944-bf63-4dff82258764',
@@ -170,13 +170,13 @@ async function createCallEngagement(ANI, DNIS, contactId){
                 "hs_timestamp": isoDate,
                 "hs_call_title": "Webex Calling Call",
                 "hubspot_owner_id": HUBSPOT_OWNER_ID,
-                "hs_call_body": "Enter your comments here ... <br/>Transcription link: https://wip.techniclabs.app",
+                "hs_call_body": `Enter your comments here ... <br/>Transcription link: ${protocol}://${host}/Webex/Transcription?InteractionID=${interactionID}`,
                 "hs_call_direction": "INBOUND",
                 "hs_call_disposition": CallDisposition.CONNECTED,
                 "hs_call_duration": "3000",
                 "hs_call_from_number": ANI,
                 "hs_call_to_number": DNIS,
-                "hs_call_recording_url": "https://webex-calling-hubspot.onrender.com/recording-not-available-es.mp3",
+                "hs_call_recording_url": `${protocol}://${host}/recording-not-available-es.mp3?InteractionID=${interactionId}`,
                 "hs_call_status": "IN_PROGRESS"
               },
               "associations": [
@@ -224,3 +224,6 @@ async function createCallEngagement(ANI, DNIS, contactId){
 }
 
 
+//
+// http://localhost:3000/Hubspot?TenantID=74a12140-d78e-4d77-86ca-09ec72f86e94&InteractionID=e44ab073-f9cb-4de4-9a62-089569e19cc2&DNIS=9000&QueueID=101603bc-82b9-45ed-ab2c-b46292a85a2c&AgentID=4c6fabf7-9943-4637-99ea-32b6b673470e&AgentName=diegofn+diegofn&ANI=3167046747&QueueName=Servicio+Cliente
+//
