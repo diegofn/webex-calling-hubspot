@@ -43,6 +43,16 @@ const server = app.listen(port, function() {
 //
 app.use(express.static('public'));
 
+
+
+//
+// GET /sidebar for Webex integration
+//
+app.get('/sidebar', function(req, res){
+    console.log("Receive Sidebar Request" + req.ip);
+    res.sendFile(__dirname + '/public/sidebar.html');
+});
+
 //
 // GET /Hubspot for Hubspot integration
 //
