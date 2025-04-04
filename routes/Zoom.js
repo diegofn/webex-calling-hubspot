@@ -5,6 +5,7 @@ const { config } = require('dotenv');
 const formatISO = require('date-fns/formatISO');
 const nodemailer = require('nodemailer');
 const ical = require('ical-generator').default;
+const qs = require('qs');
 const crypto = require('crypto');
 
 require('dotenv').config({ path: '.env' });
@@ -24,7 +25,7 @@ const router = express.Router();
 //
 router.get('/', async function(req, res){
     res.status(200)
-    res.send(`Zoom Webhook sample successfully running`)  
+    res.send(`Zoom Webhook successfully running`)  
 });
 //
 // POST / for Zoom Integration
@@ -80,6 +81,7 @@ router.post('/', async function(req, res){
                       return;
                     }
                       
+                    console.log (`========== New Zoom Event: ${data.event} ==========`);
                     if (data.event == "meeting.created"){
                         console.log (`operator:  ${data.payload.operator}`);
                         console.log (`uuid:  ${data.payload.object.uuid}`);
