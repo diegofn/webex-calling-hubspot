@@ -13,6 +13,7 @@ const MSGRAPH_TENANT_ID = process.env.MSGRAPH_TENANT_ID;
 
 const MSGRAPH_USER_URL = process.env.MSGRAPH_USER_URL;
 const MSGRAPH_EMAIL_USER = process.env.MSGRAPH_EMAIL_USER;
+const ZOOM_REDIRECT_EMAILS = process.env.ZOOM_REDIRECT_EMAILS;
 
 const router = express.Router();
 
@@ -75,12 +76,13 @@ router.post('/', async function(req, res){
                 // Create the event in Microsoft Graph
                 //
                 const endDateTime = new Date(data.payload.object.start_time);
+                const attendees = JSON.parse(ZOOM_REDIRECT_EMAILS)
                 endDateTime.setMinutes  (endDateTime.getMinutes() + data.payload.object.duration);
                 let event_data = JSON.stringify({
                     "subject": data.payload.object.topic,
                     "start": {
-                      "dateTime": data.payload.object.start_time,
-                      "timeZone": data.payload.object.timezone
+                    "dateTime": data.payload.object.start_time,
+                    "timeZone": data.payload.object.timezone
                     },
                     "end": {
                       "dateTime": endDateTime.toISOString(),
@@ -90,12 +92,8 @@ router.post('/', async function(req, res){
                       "displayName": data.payload.object.join_url,
                       "locationUri": data.payload.object.join_url
                     },
-                    "attendees": [
-                      {
-                        
-                      }
-                    ]
-                  });
+                  "attendees": attendees
+                });
 
                 //
                 // Create the request config
