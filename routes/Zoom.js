@@ -37,6 +37,7 @@ router.post('/', async function(req, res){
             if (data.event == null){
               console.log("Reveived body empty request");
               res.sendStatus(200);
+              return;
             }
               
             if (data.event == "meeting.created"){
