@@ -18,6 +18,12 @@ const ZOOM_REDIRECT_EMAILS = process.env.ZOOM_REDIRECT_EMAILS;
 const router = express.Router();
 
 //
+// Zoom / for Zoom Integration
+//
+router.get('/', async function(req, res){
+  res.sendStatus(200);
+});
+//
 // POST / for Zoom Integration
 //
 router.post('/', async function(req, res){
@@ -29,7 +35,7 @@ router.post('/', async function(req, res){
             // New meeting event
             //
             if (data.event == null){
-              res.sendStatus(200).send("Empty event");
+              res.sendStatus(200);
             }
               
             if (data.event == "meeting.created"){
