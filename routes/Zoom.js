@@ -28,8 +28,8 @@ router.post('/', async function(req, res){
             //
             // New meeting event
             //
-            if (data.event !== null && data.payload.object.uuid !== null){
-              res.sendStatus(200).send("Empty");
+            if (data.event == null){
+              res.sendStatus(200).send("Empty event");
             }
               
             if (data.event == "meeting.created"){
