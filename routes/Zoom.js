@@ -28,7 +28,10 @@ router.post('/', async function(req, res){
             //
             // New meeting event
             //
-            console.log (`======== New Event: ${data.event} with UUID: ${data.payload.object.uuid}========`);
+            if (data.event !== null && data.payload.object.uuid !== null){
+              res.sendStatus(200).send("Empty");
+            }
+              
             if (data.event == "meeting.created"){
                 console.log (`operator:  ${data.payload.operator}`);
                 console.log (`uuid:  ${data.payload.object.uuid}`);
