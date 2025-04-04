@@ -35,6 +35,7 @@ router.post('/', async function(req, res){
             // New meeting event
             //
             if (data.event == null){
+              console.log("Reveived body empty request");
               res.sendStatus(200);
             }
               
@@ -130,6 +131,7 @@ router.post('/', async function(req, res){
             }            
         }
         else{
+            console.log("Reveived empty request");
             res.sendStatus(404);
         }
     }
