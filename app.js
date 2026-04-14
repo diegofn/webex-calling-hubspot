@@ -20,6 +20,7 @@ require('dotenv').config({ path: '.env' });
 //
 const hubspotRoute = require('./routes/Hubspot');
 const zoomRoute = require('./routes/Zoom');
+const salesforceRoute = require('./routes/Salesforce');
 
 //
 // Encoding bodies support
@@ -28,6 +29,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/Hubspot', hubspotRoute);
 app.use('/Zoom', zoomRoute);
+app.use('/Salesforce', salesforceRoute);
 
 //
 // Set the consts
