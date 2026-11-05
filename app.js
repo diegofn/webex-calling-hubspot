@@ -21,6 +21,7 @@ require('dotenv').config({ path: '.env' });
 const hubspotRoute = require('./routes/Hubspot');
 const zoomRoute = require('./routes/Zoom');
 const salesforceRoute = require('./routes/Salesforce');
+const twentyRoute = require('./routes/Twenty');
 
 //
 // Encoding bodies support
@@ -30,18 +31,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/Hubspot', hubspotRoute);
 app.use('/Zoom', zoomRoute);
 app.use('/Salesforce', salesforceRoute);
+app.use('/Twenty', twentyRoute);
 
 //
 // Set the consts
 //
 const port = process.env.PORT || 3000;
 
-const HUBSPOT_API_URL = process.env.HUBSPOT_API_URL;
-const HUBSPOT_API_KEY = process.env.HUBSPOT_API_KEY;
-const HUBSPOT_OWNER_ID = process.env.HUBSPOT_OWNER_ID;
-const HUBSPOT_PORTAL_ID = process.env.HUBSPOT_PORTAL_ID;
-
-if (!HUBSPOT_API_URL || !HUBSPOT_API_KEY || !HUBSPOT_OWNER_ID || !HUBSPOT_PORTAL_ID) {
+if (!port) {
     console.error("Missing required environment variables.");
     process.exit(1);
 }
